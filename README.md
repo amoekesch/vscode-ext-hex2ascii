@@ -1,6 +1,6 @@
 # Convert HEX Arrays to ASCII and back
 
-![](https://github.com/amoekesch/vscode-ext-hex2ascii/raw/master/demo.gif)
+![](https://github.com/amoekesch/vscode-ext-hex2ascii/raw/main/demo.gif)
 
 This extension converts HEX Arrays as shown below into ASCII characters and back. Simply select the text to convert and trigger the conversion command.
 
@@ -55,10 +55,10 @@ Install the extension, select text inside your document (or none to convert the 
 * [Project github Repository](https://github.com/amoekesch/vscode-ext-hex2ascii)
 
 ## Known Issues
-* [See changelog](https://github.com/amoekesch/vscode-ext-hex2ascii/blob/master/CHANGELOG.md)
+* [See changelog](https://github.com/amoekesch/vscode-ext-hex2ascii/blob/main/CHANGELOG.md)
 
 ## Release Notes
-* [See changelog](https://github.com/amoekesch/vscode-ext-hex2ascii/blob/master/CHANGELOG.md)
+* [See changelog](https://github.com/amoekesch/vscode-ext-hex2ascii/blob/main/CHANGELOG.md)
 
 ## Attribution
 * Icon made by [iconixar]([https://www.flaticon.com/authors/iconixar]) from [Flaticon](https://www.flaticon.com/)

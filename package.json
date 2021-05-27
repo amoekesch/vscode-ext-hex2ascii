@@ -1,0 +1,68 @@
+{
+    "name": "hex-array-to-ascii",
+    "displayName": "HEX Array to ASCII Converter",
+    "description": "Convert HEX Arrays to ASCII and back.",
+    "version": "0.0.1",
+    "publisher": "andreas-moekesch",
+    "license": "GPLv3",
+    "author": {
+        "name": "andreas-moekesch"
+    },
+    "icon": "icon.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/amoekesch/vscode-ext-hex2ascii"
+    },
+    "homepage": "https://github.com/amoekesch/vscode-ext-hex2ascii/blob/master/README.md",
+    "engines": {
+        "vscode": "^1.28.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.h2a",
+        "onCommand:extension.a2h",
+        "onCommand:extension.a2h0x0",
+        "onCommand:extension.a2h0xA"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.h2a",
+                "title": "h2a: Convert HEX Array to ASCII"
+            },
+            {
+                "command": "extension.a2h",
+                "title": "a2h: Convert ASCII to HEX Array [00 0F ...]"
+            },
+            {
+                "command": "extension.a2h0x0",
+                "title": "a2h0x0: Convert ASCII to 0x-prefixed HEX Array [0x00 0x0F ...]"
+            },
+            {
+                "command": "extension.a2h0xA",
+                "title": "a2h0xA: Convert ASCII to shortened 0x-prefixed HEX Array [0x0 0xF ...]"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/glob": "^7.1.1",
+        "@types/mocha": "^5.2.6",
+        "@types/node": "^10.12.21",
+        "@types/vscode": "^1.28.0",
+        "glob": "^7.1.4",
+        "mocha": "^6.1.4",
+        "typescript": "^3.3.1",
+        "tslint": "^5.12.1",
+        "vscode-test": "^1.0.0-next.0"
+    }
+}

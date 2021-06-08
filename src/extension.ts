@@ -154,6 +154,9 @@ function asciiToHex(ascii: string, type:Number): string {
         else if (type === A2H_0XA && converted.startsWith('0')) {
             converted = '0x' + converted.substr(1, 1);
         }
+        else if (type === A2H_STD && converted.length === 1) {
+            converted = '0' + converted;
+        }
 
         // prepend SPACE if not first
         if (i !== 0) {

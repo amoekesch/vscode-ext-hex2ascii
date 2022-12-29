@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 
-const A2H_STD = 0;
-const A2H_0X0 = 1;
-const A2H_0XA = 2;
+export const A2H_STD = 0;
+export const A2H_0X0 = 1;
+export const A2H_0XA = 2;
 
 export function activate(context: vscode.ExtensionContext) {
     /**
@@ -10,25 +10,11 @@ export function activate(context: vscode.ExtensionContext) {
      * Auto-detect the type of HEX and convert to human-readable ASCII text
      */
     let disposable1 = vscode.commands.registerCommand('extension.h2a', () => {
-        let editor = vscode.window.activeTextEditor;
-
-        // check if an editor is active
-        if (editor) {
-            // get selected text
-            let document = editor.document;
-            let selection = editor.selection;
-
-            // select all if none is selected
-            if (selection.isEmpty) {
-                var firstLine = editor.document.lineAt(0);
-                var lastLine = editor.document.lineAt(editor.document.lineCount - 1);
-                editor.selection = new vscode.Selection(firstLine.lineNumber, firstLine.range.start.character, lastLine.lineNumber, lastLine.range.end.character);
-                selection = editor.selection;
-            }
-
-            // convert
-            let hex = document.getText(selection);
-            let ascii = hexToAscii(hex);
+        const editor = vscode.window.activeTextEditor;
+        if(editor) {
+            const document = editor.document;
+            const selection = getSelection(editor);
+            const ascii = hexToAscii(document.getText(selection));
 
             // replace text
             editor.edit(editBuilder => {
@@ -42,25 +28,11 @@ export function activate(context: vscode.ExtensionContext) {
      * Standard Conversion 00
      */
     let disposable2 = vscode.commands.registerCommand('extension.a2h', () => {
-        let editor = vscode.window.activeTextEditor;
-
-        // check if an editor is active
-        if (editor) {
-            // get selected text
-            let document = editor.document;
-            let selection = editor.selection;
-
-            // select all if none is selected
-            if (selection.isEmpty) {
-                var firstLine = editor.document.lineAt(0);
-                var lastLine = editor.document.lineAt(editor.document.lineCount - 1);
-                editor.selection = new vscode.Selection(firstLine.lineNumber, firstLine.range.start.character, lastLine.lineNumber, lastLine.range.end.character);
-                selection = editor.selection;
-            }
-
-            // convert
-            let ascii = document.getText(selection);
-            let hex = asciiToHex(ascii, A2H_STD);
+        const editor = vscode.window.activeTextEditor;
+        if(editor) {
+            const document = editor.document;
+            const selection = getSelection(editor);
+            const hex = asciiToHex(document.getText(selection), A2H_STD, false);
 
             editor.edit(editBuilder => {
                 editBuilder.replace(selection, hex);
@@ -73,25 +45,11 @@ export function activate(context: vscode.ExtensionContext) {
      * Prefixed Version 0x00
      */
     let disposable3 = vscode.commands.registerCommand('extension.a2h0x0', () => {
-        let editor = vscode.window.activeTextEditor;
-
-        // check if an editor is active
-        if (editor) {
-            // get selected text
-            let document = editor.document;
-            let selection = editor.selection;
-
-            // select all if none is selected
-            if (selection.isEmpty) {
-                var firstLine = editor.document.lineAt(0);
-                var lastLine = editor.document.lineAt(editor.document.lineCount - 1);
-                editor.selection = new vscode.Selection(firstLine.lineNumber, firstLine.range.start.character, lastLine.lineNumber, lastLine.range.end.character);
-                selection = editor.selection;
-            }
-
-            // convert
-            let ascii = document.getText(selection);
-            let hex = asciiToHex(ascii, A2H_0X0);
+        const editor = vscode.window.activeTextEditor;
+        if(editor) {
+            const document = editor.document;
+            const selection = getSelection(editor);
+            const hex = asciiToHex(document.getText(selection), A2H_0X0, false);
 
             editor.edit(editBuilder => {
                 editBuilder.replace(selection, hex);
@@ -104,25 +62,65 @@ export function activate(context: vscode.ExtensionContext) {
      * Prefixed/Shortened Version 0xA
      */
     let disposable4 = vscode.commands.registerCommand('extension.a2h0xA', () => {
-        let editor = vscode.window.activeTextEditor;
+        const editor = vscode.window.activeTextEditor;
+        if(editor) {
+            const document = editor.document;
+            const selection = getSelection(editor);
+            const hex = asciiToHex(document.getText(selection), A2H_0XA, false);
 
-        // check if an editor is active
-        if (editor) {
-            // get selected text
-            let document = editor.document;
-            let selection = editor.selection;
+            editor.edit(editBuilder => {
+                editBuilder.replace(selection, hex);
+            });
+        }
+    });
 
-            // select all if none is selected
-            if (selection.isEmpty) {
-                var firstLine = editor.document.lineAt(0);
-                var lastLine = editor.document.lineAt(editor.document.lineCount - 1);
-                editor.selection = new vscode.Selection(firstLine.lineNumber, firstLine.range.start.character, lastLine.lineNumber, lastLine.range.end.character);
-                selection = editor.selection;
-            }
+    /**
+     * Handle ASCII to HEX Conversion
+     * Standard Conversion 00
+     * Comma separated
+     */
+    let disposable5 = vscode.commands.registerCommand('extension.a2hComma', () => {
+        const editor = vscode.window.activeTextEditor;
+        if(editor) {
+            const document = editor.document;
+            const selection = getSelection(editor);
+            const hex = asciiToHex(document.getText(selection), A2H_STD, true);
 
-            // convert
-            let ascii = document.getText(selection);
-            let hex = asciiToHex(ascii, A2H_0XA);
+            editor.edit(editBuilder => {
+                editBuilder.replace(selection, hex);
+            });
+        }
+    });
+
+    /**
+     * Handle ASCII to HEX Conversion
+     * Prefixed Version 0x00
+     * Comma separated
+     */
+    let disposable6 = vscode.commands.registerCommand('extension.a2h0x0Comma', () => {
+        const editor = vscode.window.activeTextEditor;
+        if(editor) {
+            const document = editor.document;
+            const selection = getSelection(editor);
+            const hex = asciiToHex(document.getText(selection), A2H_0X0, true);
+
+            editor.edit(editBuilder => {
+                editBuilder.replace(selection, hex);
+            });
+        }
+    });
+
+    /**
+     * Handle ASCII to HEX Conversion
+     * Prefixed/Shortened Version 0xA
+     * Comma separated
+     */
+    let disposable7 = vscode.commands.registerCommand('extension.a2h0xAComma', () => {
+        const editor = vscode.window.activeTextEditor;
+        if(editor) {
+            const document = editor.document;
+            const selection = getSelection(editor);
+            const hex = asciiToHex(document.getText(selection), A2H_0XA, true);
 
             editor.edit(editBuilder => {
                 editBuilder.replace(selection, hex);
@@ -135,6 +133,9 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(disposable2);
     context.subscriptions.push(disposable3);
     context.subscriptions.push(disposable4);
+    context.subscriptions.push(disposable5);
+    context.subscriptions.push(disposable6);
+    context.subscriptions.push(disposable7);
 }
 
 export function deactivate() {
@@ -142,7 +143,11 @@ export function deactivate() {
 }
 
 // Convert input ascii string to hex string
-function asciiToHex(ascii: string, type:Number): string {
+export function asciiToHex(ascii: string, type: Number, commaSeparated: boolean): string {
+    const separator = commaSeparated
+        ? ', '
+        : ' ';
+
     var hex = '';
 
     // convert character by character
@@ -160,7 +165,7 @@ function asciiToHex(ascii: string, type:Number): string {
 
         // prepend SPACE if not first
         if (i !== 0) {
-            converted = ' ' + converted;
+            converted = separator + converted;
         }
 
         // combine into result
@@ -174,11 +179,14 @@ function asciiToHex(ascii: string, type:Number): string {
  * Convert input HEX to ASCII
  * Return original in case of an error
  */
-function hexToAscii(hex: string): string {
+export function hexToAscii(hex: string): string {
     var ascii = '';
 
     // clean string
     let convert = hex.trim();
+
+    // strip commas
+    convert = convert.replace(/\,/gm, '');
 
     // convert all the new lines and tabs
     convert = convert.replace(/(\r)/gm, ' 0D ');
@@ -214,4 +222,19 @@ function hexToAscii(hex: string): string {
         ascii += String.fromCharCode(parsed);
     }
     return ascii;
+}
+
+function getSelection(editor: vscode.TextEditor): vscode.Selection {
+    // get selected text
+    let selection = editor.selection;
+
+    // select all if none is selected
+    if (selection.isEmpty) {
+        var firstLine = editor.document.lineAt(0);
+        var lastLine = editor.document.lineAt(editor.document.lineCount - 1);
+        editor.selection = new vscode.Selection(firstLine.lineNumber, firstLine.range.start.character, lastLine.lineNumber, lastLine.range.end.character);
+        selection = editor.selection;
+    }
+
+    return selection;
 }

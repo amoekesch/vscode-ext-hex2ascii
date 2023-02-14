@@ -15,7 +15,7 @@
     },
     "homepage": "https://github.com/amoekesch/vscode-ext-hex2ascii/blob/master/README.md",
     "engines": {
-        "vscode": "^1.28.0"
+        "vscode": "^1.74.0"
     },
     "categories": [
         "Other"
@@ -24,7 +24,10 @@
         "onCommand:extension.h2a",
         "onCommand:extension.a2h",
         "onCommand:extension.a2h0x0",
-        "onCommand:extension.a2h0xA"
+        "onCommand:extension.a2h0xA",
+        "onCommand:extension.a2hComma",
+        "onCommand:extension.a2h0x0Comma",
+        "onCommand:extension.a2h0xAComma"
     ],
     "main": "./out/extension.js",
     "contributes": {
@@ -44,6 +47,18 @@
             {
                 "command": "extension.a2h0xA",
                 "title": "a2h0xA: Convert ASCII to shortened 0x-prefixed HEX Array [0x0 0xF ...]"
+            },
+            {
+                "command": "extension.a2hComma",
+                "title": "a2hComma: Convert ASCII to comma separated, HEX Array [00, 0F ...]"
+            },
+            {
+                "command": "extension.a2h0x0Comma",
+                "title": "a2h0x0Comma: Convert ASCII to comma separated, 0x-prefixed HEX Array [0x00, 0x0F ...]"
+            },
+            {
+                "command": "extension.a2h0xAComma",
+                "title": "a2h0xAComma: Convert ASCII to comma separated, shortened 0x-prefixed HEX Array [0x0, 0xF ...]"
             }
         ]
     },
@@ -58,11 +73,11 @@
         "@types/glob": "^7.1.1",
         "@types/mocha": "^5.2.6",
         "@types/node": "^10.12.21",
-        "@types/vscode": "^1.28.0",
+        "@types/vscode": "^1.74.0",
         "glob": "^7.1.4",
         "mocha": "^6.1.4",
-        "typescript": "^3.3.1",
         "tslint": "^5.12.1",
-        "vscode-test": "^1.0.0-next.0"
+        "typescript": "^4.9.4",
+        "vscode-test": "^1.6.1"
     }
 }

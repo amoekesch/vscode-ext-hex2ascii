@@ -2,7 +2,7 @@
     "name": "hex-array-to-ascii",
     "displayName": "HEX Array to ASCII Converter",
     "description": "Convert HEX Arrays to ASCII and back.",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "publisher": "amoekesch",
     "license": "GPLv3",
     "author": {
